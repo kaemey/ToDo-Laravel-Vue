@@ -24,5 +24,6 @@ Route::group(["prefix" => "todo"], function () {
     Route::post('/{todo}', [IndexController::class, 'update']);
     Route::get('/', [IndexController::class, 'index'])->middleware("auth")->name("todo.index");
     Route::get('/edit', [IndexController::class, 'edit'])->middleware("auth");
+    Route::get('/search/{todo}', [IndexController::class, 'edit'])->middleware("auth");
     Route::get('/send', [IndexController::class, 'send'])->middleware("auth")->name("todo.send");
 });

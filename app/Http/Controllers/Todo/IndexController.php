@@ -29,8 +29,9 @@ class IndexController extends Controller
 
     public function get()
     {
-        $todo = Todo::query()->latest()->get()->all();
-        return $todo;
+        $todos = Todo::query()->latest()->get()->all();
+        $tags = Tag::join('todos_tags', 'tags.id', '=', 'todos_tags.tag_id')->get();
+        return ['todos' => $todos, 'tags' => $tags];
     }
 
     public function store(StoreRequest $request)

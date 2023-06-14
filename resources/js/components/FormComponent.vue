@@ -10,9 +10,25 @@
                      <div class="container">
                         <div class="row">                             
                            <div class="col-sm">
-                              <h4 class="text-left my-3 pb-3 fs-2">Todo App</h4>
+                              <h4 class="text-left my-3 pb-3 fs-2">Todo list</h4>
                            </div>
-                           <div class="col-sm" style="text-align: right;">
+                           <div class="col-sm">
+                              <input type="text" v-model="searchval" v-on:input="Search()" class="form-control rounded mt-3" placeholder="Поиск">
+                           </div>
+                           <div class="col-sm mt-3">
+                              <select v-model="choosedTags" multiple v-on:change="TagSearch()">
+                                 <option v-for="searchtag in tagsSearchData" :value="searchtag.value">{{ searchtag.label }}</option>
+                              </select>
+                              <!-- <Multiselect
+                                 v-on:input="TagSearch()"
+                                 v-model="choosedTags"
+                                 :options="tagsSearchData"
+                                 placeholder="Теги"
+                                 :disabled="searchval ? true : false"
+                                 mode="multiple"
+                              /> -->
+                           </div>
+                           <div class="col-sm" style="text-align: right;">         
                               <a href="/" class="btn btn-primary btn-lg mt-2">Home</a>
                            </div>
                         </div>
@@ -44,10 +60,10 @@
                         <thead>
                            <tr>
                               <th scope="col">
-                                 <p class="fs-3">Text</p>
+                                 <p class="fs-3" style="max-width:250px; width: 200px;">Text</p>
                               </th>
                               <th scope="col">
-                                 <p class="fs-3">Image</p>
+                                 <p class="fs-3" style="max-width:250px; width: 200px;">Image</p>
                               </th>
                               <th scope="col">
                                  <p class="fs-3">Commands</p>
@@ -55,20 +71,37 @@
                            </tr>
                         </thead>
                         <tbody>
-                           <template v-for="todo in todos">
-                              <tr>
-                                 <td>
-                                    <p class="fs-4" style="max-width:250px; width: 200px;"> {{ todo.title }} </p>
-                                 </td>
-                                 <td align="left">
-                                    <img v-if="todo.imgpath" @click.prevent="zoomImage(todo.imgpath)" :src="todo.imgpath" width="150" height="150">
-                                 </td>
-                                 <td>
-                                    <br><button @click.prevent="openEditForm(todo.id, todo.title, todo.imgpath)" type="button" class="btn btn-success">Edit</button><br><br>
-                                    <button @click.prevent="deleteTodo(todo.id)" type="button" class="btn btn-danger">Delete</button>
-                                 </td>
-                              </tr>
-                           </template>
+
+                              <template v-if="searchval || searchData.length > 0" v-for="todo in searchData">
+                                 <tr>
+                                    <td>
+                                       <p class="fs-4"> {{ todo.title }} </p>
+                                    </td>
+                                    <td>
+                                       <img v-if="todo.imgpath" @click.prevent="zoomImage(todo.imgpath)" :src="todo.imgpath" width="150" height="150">
+                                    </td>
+                                    <td>
+                                       <br><button @click.prevent="openEditForm(todo.id, todo.title, todo.imgpath)" type="button" class="btn btn-success">Edit</button><br><br>
+                                       <button @click.prevent="deleteTodo(todo.id)" type="button" class="btn btn-danger">Delete</button>
+                                    </td>
+                                 </tr>
+                              </template>
+
+                              <template v-else v-for="todo in todos">
+                                 <tr>
+                                    <td>
+                                       <p class="fs-4" style="max-width:250px; width: 200px;"> {{ todo.title }} </p>
+                                    </td>
+                                    <td align="left">
+                                       <a :href="todo.imgpath" target="_blank"><img v-if="todo.imgpath" :src="todo.imgpath" width="150" height="150"></a>
+                                    </td>
+                                    <td>
+                                       <br><button @click.prevent="openEditForm(todo.id, todo.title, todo.imgpath)" type="button" class="btn btn-success">Edit</button><br><br>
+                                       <button @click.prevent="deleteTodo(todo.id)" type="button" class="btn btn-danger">Delete</button>
+                                    </td>
+                                 </tr>
+                              </template>
+
                         </tbody>
                      </table>
                   </div>
@@ -83,19 +116,24 @@
 </template>
 
 <script>
+import Multiselect from '@vueform/multiselect'
 import EditComponent from './EditComponent.vue';
 import ZoomComponent from './ZoomComponent.vue';
 
     export default {
     data() {
-        return {
+        return { 
+            choosedTags: new Array(),
+            searchval: null,
+            searchData: new Array(),
             title: null,
             tags: new Array(),
             editingTodo: null,
             editingId: null,
             image: null,
             todos: null,
-            etodo: null,
+            tagsData: null,
+            tagsSearchData: new Array(),
             zoomimg: null
         };
     },
@@ -104,8 +142,21 @@ import ZoomComponent from './ZoomComponent.vue';
     },
     methods: {
         getTodos() {
+            this.tagsSearchData = new Array();
+
             axios.get("/api/todo/get")
-                .then(response => (this.todos = response.data));
+                .then(response => (
+                     this.todos = response.data.todos,
+                     this.tagsData = response.data.tags,
+                     this.tagsData.forEach( (tagobj) =>{
+                        this.tagsSearchData.push(
+                           {
+                              value: tagobj.id,
+                              label: tagobj.title
+                           });
+                     })
+            ));
+            
         },
         fileUpload() {
             this.image = this.$refs.file.files[0];
@@ -141,9 +192,6 @@ import ZoomComponent from './ZoomComponent.vue';
         isEdit() {
             return this.editingId == null;
         },
-        isZoom(){
-            return this.zoomimg == null;
-        },
         zoomImage(path){
             this.zoomimg = path;
         },
@@ -159,8 +207,53 @@ import ZoomComponent from './ZoomComponent.vue';
             else{
                this.$refs.taginput.value = '';
             }
+        },
+        Search(){
+
+            if(this.choosedTags.length == 0){
+
+               this.searchData = new Array();
+               this.todos.forEach(( todo ) => {
+                  if (todo.title.includes(this.searchval)){
+                     this.searchData.push(todo);
+                  }
+               });
+               
+            }
+
+        },
+        TagSearch(){
+
+            if(this.searchval == null){
+
+               this.searchData = new Array();
+
+               this.tagsData.forEach( (tagData) => {
+                  
+                  for (let i = 0; i < this.choosedTags.length; i++) {
+                     
+                     if (tagData.id == this.choosedTags[i]){
+                        
+                        this.todos.forEach( (todo) => {
+                           
+                           if(tagData.todo_id == todo.id){
+
+                              this.searchData.push(todo);
+
+                           }
+
+                        });
+
+                     }
+
+                  }
+                  
+               });
+            }
+
         }
     },
-    components: { EditComponent, ZoomComponent }
+    components: { EditComponent, ZoomComponent, Multiselect }
 }
 </script>
+<style src="@vueform/multiselect/themes/default.css"></style>
