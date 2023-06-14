@@ -18,7 +18,8 @@ return new class extends Migration {
             $table->unsignedBigInteger("user_id");
 
             $table->index("user_id", "todo_user_idx");
-            $table->foreign("user_id", "todo_user_fk")->on("users")->references("id");
+            $table->foreign("user_id", "todo_user_fk")->on("users")->references("id")->onDelete('cascade');
+
         });
     }
 

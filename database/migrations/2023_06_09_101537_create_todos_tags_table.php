@@ -20,8 +20,8 @@ return new class extends Migration {
             $table->index("todo_id", "todo_tag_todo_idx");
             $table->index("tag_id", "todo_tag_tag_idx");
 
-            $table->foreign("todo_id", "todo_tag_todo_fk")->on("todos")->references("id");
-            $table->foreign("tag_id", "todo_tag_tagfk")->on("tags")->references("id");
+            $table->foreign("todo_id", "todo_tag_todo_fk")->on("todos")->references("id")->onDelete('cascade');
+            $table->foreign("tag_id", "todo_tag_tagfk")->on("tags")->references("id")->onDelete('cascade');
         });
     }
 

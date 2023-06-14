@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Todo;
 
+use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
@@ -35,18 +36,29 @@ class IndexController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
+
         if ($request->file()) {
             $name = $request->file('file')->getClientOriginalName();
-            $path = Storage::disk('public')->putFileAs('/images', $request->file('file'), $name);
+            $path = Storage::disk('public')->putFileAs('/images', $request->file('file'), rand(0, 50) . $name);
             $path = url('storage/' . $path);
-            Todo::create(
+            $todo = Todo::create(
                 ['title' => $data['title'], 'imgpath' => $path, 'user_id' => Auth::user()->id]
             );
         } else {
-            Todo::create(
+            $todo = Todo::create(
                 ['title' => $data['title'], 'user_id' => Auth::user()->id]
             );
         }
+
+        if ($request->tags) {
+            $tag_ids = [];
+            $tags = explode(",", $data['tags']);
+            foreach ($tags as $tag) {
+                $tag_ids[] = Tag::firstOrCreate(['title' => $tag])->id;
+            }
+            $todo->tags()->attach($tag_ids);
+        }
+
     }
 
     public function edit(Todo $todo)
@@ -59,7 +71,7 @@ class IndexController extends Controller
         $data = $request->validated();
         if ($request->file()) {
             $name = $request->file('file')->getClientOriginalName();
-            $path = Storage::disk('public')->putFileAs('/images', $request->file('file'), $name);
+            $path = Storage::disk('public')->putFileAs('/images', $request->file('file'), rand(0, 50) . $name);
             $path = url('storage/' . $path);
             $todo->update(['title' => $data['title'], 'imgpath' => $path]);
         } else {
@@ -69,12 +81,17 @@ class IndexController extends Controller
 
     public function deleteImage(Todo $todo)
     {
+        $pos = strpos($todo->imgpath, "images");
+        $path = substr($todo->imgpath, $pos);
+        Storage::disk('public')->delete($path);
         $todo->update(['imgpath' => '']);
     }
 
     public function delete(Todo $todo)
     {
+        $pos = strpos($todo->imgpath, "images");
+        $path = substr($todo->imgpath, $pos);
+        Storage::disk('public')->delete($path);
         $todo->delete();
-        return ["1111111111"];
     }
 }

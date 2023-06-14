@@ -80,31 +80,35 @@
             },
 
             postData(){
-                if (this.isDelImg) {
-                    axios.delete(`/api/todo/image/` + this.id).then();
-                }
-                let formData = new FormData();
-                formData.append('title', this.title);
-                formData.append('file', this.image);
-                axios.post('/todo/'+this.id,
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
+                if (this.title){
+                    if (this.isDelImg) {
+                        axios.delete(`/api/todo/image/` + this.id).then();
                     }
+                    let formData = new FormData();
+                    formData.append('title', this.title);
+                    formData.append('file', this.image);
+                    axios.post('/todo/'+this.id,
+                    formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                    ).then(
+                        this.cancelEdit(),                  
+                    );
+
+                    this.$refs.img.value = null;
+
+                    setTimeout(()=>{
+                    this.$parent.getTodos()
+                    },300);
                 }
-                ).then(
-                    this.cancelEdit(),                  
-                );
-
-                setTimeout(()=>{
-                this.$parent.getTodos()
-                },300);
-
             },
 
             cancelEdit(){
                 this.$parent.editingId = null;
+                this.$refs.img.value = null;
             },
 
             restoreImg(){

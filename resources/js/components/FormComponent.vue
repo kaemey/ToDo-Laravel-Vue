@@ -10,7 +10,7 @@
                      <div class="container">
                         <div class="row">                             
                            <div class="col-sm">
-                              <h4 class="text-left my-3 pb-3 fs-2">To Do App</h4>
+                              <h4 class="text-left my-3 pb-3 fs-2">Todo App</h4>
                            </div>
                            <div class="col-sm" style="text-align: right;">
                               <a href="/" class="btn btn-primary btn-lg mt-2">Home</a>
@@ -30,6 +30,12 @@
                            </div>
                            <div class="mt-3 mb-3">
                               <input ref="file" id="file" v-on:change="fileUpload()" class="form-control form-control-lg" type="file">
+                           </div>
+                           <div class="mt-3 mb-3">
+                              <input type="text" ref="taginput" v-on:input="tagPusher()" class="form-control" placeholder="Теги" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+                           </div>
+                           <div v-if="tags.length > 0" class="mt-3 mb-3" style="display: inline;">
+                                 <span v-for="tag in tags" style="background-color: #f0ad4e; padding: 0.25em 0.4em; color: #fff; margin: 5px; border-radius: 0.25rem;">{{tag}}</span>
                            </div>
                         </div>
                      </form>
@@ -84,6 +90,7 @@ import ZoomComponent from './ZoomComponent.vue';
     data() {
         return {
             title: null,
+            tags: new Array(),
             editingTodo: null,
             editingId: null,
             image: null,
@@ -104,15 +111,20 @@ import ZoomComponent from './ZoomComponent.vue';
             this.image = this.$refs.file.files[0];
         },
         postData() {
-            let formData = new FormData();
-            formData.append("title", this.title);
-            formData.append("file", this.image);
-            axios.post("/todo/store", formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            }).then(res => (this.getTodos()));
-            this.title = null;
+            if (this.title){
+               let formData = new FormData();
+               formData.append("title", this.title);
+               formData.append("file", this.image);
+               if(this.tags.length > 0){formData.append("tags", this.tags);}           
+               axios.post("/todo/store", formData, {
+                  headers: {
+                     "Content-Type": "multipart/form-data"
+                  }
+               }).then(res => (this.getTodos()));
+               this.title = null;
+               this.tags = new Array();
+               this.$refs.file.value = null;
+            }
         },
         deleteTodo(id) {
             axios.delete(`/api/todo/` + id)
@@ -134,6 +146,19 @@ import ZoomComponent from './ZoomComponent.vue';
         },
         zoomImage(path){
             this.zoomimg = path;
+        },
+        tagPusher(){
+         let text = `${this.$refs.taginput.value}`;
+            if(text != ","){
+               if(text.includes(',')){
+                  text = text.slice(0, text.length-1);
+                  this.tags.push(text);
+                  this.$refs.taginput.value = '';
+               }
+            }
+            else{
+               this.$refs.taginput.value = '';
+            }
         }
     },
     components: { EditComponent, ZoomComponent }
