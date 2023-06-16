@@ -38,6 +38,7 @@
     sudo apt-get install php-mysql<br> <br> 
 
 <h2>Настройка NGINX</h2>
+
 <pre>
 <code>
 server {
