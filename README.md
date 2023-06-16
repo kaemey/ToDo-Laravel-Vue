@@ -5,12 +5,13 @@
     NGINX sudo apt install nginx sudo systemctl reload nginx<br><br> 
     MYSQL<br> 
     sudo apt install mysql-server<br><br> 
-    sudo mysql SELECT user,authentication_string,plugin,host FROM mysql.user;<br> 
+    sudo mysql<br>
+    SELECT user,authentication_string,plugin,host FROM mysql.user;<br> 
     ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';<br> 
     sudo mysql_secure_installation<br> 
     CREATE USER 'username'@'host' IDENTIFIED WITH mysql_native_password BY 'password';<br> 
-    CREATE DATABASE Название БД;<br><br> 
-    GRANT ALL ON laravel.* TO 'laravel'@'localhost';<br> 
+    CREATE DATABASE Название БД;<br><br>
+    GRANT ALL ON laravel.* TO 'laravel'@'localhost';<br>
     FLUSH PRIVILEGES;<br><br> 
     PHP-FPM-8.2<br> 
     sudo apt update && sudo apt install -y software-properties-common<br> 
