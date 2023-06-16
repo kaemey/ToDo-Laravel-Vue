@@ -1,6 +1,6 @@
 <h1 align="center"> Todo листинг с асинхронными крудом,
     <br>поиском и фильтрами. </h1> 
-    <h2>Деплой на VPS (Ubuntu):</h2><br> 
+    <h2>Деплой на VPS (Ubuntu):</h2> 
     sudo apt update<br><br> 
     NGINX sudo apt install nginx sudo systemctl reload nginx<br><br> 
     MYSQL<br> 
@@ -13,8 +13,8 @@
     GRANT ALL ON laravel.* TO 'laravel'@'localhost';<br> 
     FLUSH PRIVILEGES;<br><br> 
     PHP-FPM-8.2<br> 
-    sudo apt update && sudo apt install -y software-properties-common 
-    sudo add-apt-repository ppa:ondrej/php 
+    sudo apt update && sudo apt install -y software-properties-common<br> 
+    sudo add-apt-repository ppa:ondrej/php<br> 
     sudo apt update sudo apt install php8.2-fpm<br><br> 
     GIT<br>
     sudo apt install git<br><br> 
