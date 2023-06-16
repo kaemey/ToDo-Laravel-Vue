@@ -67,4 +67,4 @@ server {
 </pre>
 sudo nginx -t<br>
 sudo systemctl reload nginx
-<h2>Настройка NGINX</h2>
+<h2>Настройка NGINX</h2> 
