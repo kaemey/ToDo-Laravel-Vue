@@ -6,7 +6,7 @@ sudo apt update<br><br>
 NGINX
 sudo apt install nginx
 sudo systemctl reload nginx<br><br>
-MYSQL
+MYSQL<br>
 sudo apt install mysql-server<br><br>
 sudo mysql
 SELECT user,authentication_string,plugin,host FROM mysql.user;<br>
