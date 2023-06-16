@@ -13,7 +13,7 @@ SELECT user,authentication_string,plugin,host FROM mysql.user;<br>
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';<br>
 sudo mysql_secure_installation<br>
 CREATE USER 'username'@'host' IDENTIFIED WITH mysql_native_password BY 'password';<br>
-CREATE DATABASE Название БД;<br>
+CREATE DATABASE Название БД;<br><br>
 GRANT ALL ON laravel.* TO 'laravel'@'localhost';<br>
 FLUSH PRIVILEGES;<br><br>
 PHP-FPM-8.2<br>
