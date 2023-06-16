@@ -35,8 +35,8 @@
     sudo apt-get install php-common<br> 
     sudo apt-get install php-xml<br> 
     sudo apt-get install php-curl<br> 
-    sudo apt-get install php-mysql<br> <br> 
-
+    sudo apt-get install php-mysql<br>
+    
 <h2>Настройка NGINX</h2>
 sudo vim /etc/nginx/sites-available/YOUR.DOMAIN.COM
 <pre>
@@ -45,7 +45,7 @@ server {
     listen 80;
     listen [::]:80;
 
-    root /var/www/html/first-project/public;
+    root /var/www/html/Ваш проект/public;
     index index.php index.html index.htm index.nginx-debian.html;
 
     server_name YOUR.DOMAIN.COM;
@@ -66,4 +66,5 @@ server {
 </code>  
 </pre>
 sudo nginx -t<br>
-sudo systemctl reload nginx reload Nginx
+sudo systemctl reload nginx
+<h2>Настройка NGINX</h2>
