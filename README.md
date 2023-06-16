@@ -38,7 +38,8 @@
     sudo apt-get install php-mysql<br> <br> 
 
 <h2>Настройка NGINX</h2>
-<code>
+<pre>
+  <code>
     server {
     listen 80;
     listen [::]:80;
@@ -61,4 +62,6 @@
             deny all;
     }
 }
-</code>
+</code>  
+</pre>
+
