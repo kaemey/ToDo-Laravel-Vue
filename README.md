@@ -38,7 +38,7 @@
     sudo apt-get install php-mysql<br> <br> 
 
 <h2>Настройка NGINX</h2>
-
+sudo vim /etc/nginx/sites-available/YOUR.DOMAIN.COM
 <pre>
 <code>
 server {
@@ -65,4 +65,5 @@ server {
 }
 </code>  
 </pre>
-
+sudo nginx -t
+sudo systemctl reload nginx reload Nginx
