@@ -1,10 +1,8 @@
 <h1 align="center">
   Todo листинг с асинхронными крудом,<br>поиском и фильтрами.
 </h1>
-<h2>Деплой на VPS (Ubuntu):</h2>
-
-sudo apt update
-
+<h2>Деплой на VPS (Ubuntu):</h2><br><br>
+sudo apt update<br><br>
 NGINX
 sudo apt install nginx
 sudo systemctl reload nginx
