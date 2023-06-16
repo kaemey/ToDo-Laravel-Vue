@@ -35,4 +35,30 @@
     sudo apt-get install php-common<br> 
     sudo apt-get install php-xml<br> 
     sudo apt-get install php-curl<br> 
-    sudo apt-get install php-mysql
+    sudo apt-get install php-mysql<br> <br> 
+
+<h2>Настройка NGINX</h2>
+<code>
+    server {
+    listen 80;
+    listen [::]:80;
+
+    root /var/www/html/first-project/public;
+    index index.php index.html index.htm index.nginx-debian.html;
+
+    server_name YOUR.DOMAIN.COM;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+    }
+
+    location ~ /\.ht {
+            deny all;
+    }
+}
+</code>
