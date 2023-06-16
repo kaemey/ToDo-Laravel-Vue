@@ -39,8 +39,8 @@
 
 <h2>Настройка NGINX</h2>
 <pre>
-  <code>
-    server {
+<code>
+server {
     listen 80;
     listen [::]:80;
 
