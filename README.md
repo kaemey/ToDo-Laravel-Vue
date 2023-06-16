@@ -28,13 +28,13 @@ cd ~
 sudo php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer<br><br>
 NODE NPM
 curl -fsSL https://deb.nodesource.com/setup_19.x | bash - &&\
-sudo apt-get install -y nodejs<br><br>
-PHP Extensions
-sudo apt-get install php-bcmath
-sudo apt-get install php-mbstring
-sudo apt-get install php-gd
-sudo apt-get install php-zip
-sudo apt-get install php-common
-sudo apt-get install php-xml
-sudo apt-get install php-curl
+sudo apt-get install -y nodejs<br><br><br>
+PHP Extensions:<br>
+sudo apt-get install php-bcmath<br>
+sudo apt-get install php-mbstring<br>
+sudo apt-get install php-gd<br>
+sudo apt-get install php-zip<br>
+sudo apt-get install php-common<br>
+sudo apt-get install php-xml<br>
+sudo apt-get install php-curl<br>
 sudo apt-get install php-mysql
