@@ -19,7 +19,8 @@
     PHP-FPM-8.2<br> 
     sudo apt update && sudo apt install -y software-properties-common<br> 
     sudo add-apt-repository ppa:ondrej/php<br> 
-    sudo apt update sudo apt install php8.2-fpm<br><br> 
+    sudo apt update <br> 
+    sudo apt install php8.2-fpm<br><br> 
     GIT<br>
     sudo apt install git<br><br> 
     COMPOSER cd ~ sudo php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer<br><br> 
