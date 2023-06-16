@@ -1,48 +1,34 @@
 <h1 align="center">
   Todo листинг с асинхронными крудом,<br>поиском и фильтрами.
 </h1>
-<h2>Деплой на VPS (Ubuntu):</h2><br><br>
+<h2>Деплой на VPS (Ubuntu):</h2><br>
 sudo apt update<br><br>
 NGINX
 sudo apt install nginx
-sudo systemctl reload nginx
-
+sudo systemctl reload nginx<br>
 MYSQL
-sudo apt install mysql-server
-
+sudo apt install mysql-server<br>
 sudo mysql
-SELECT user,authentication_string,plugin,host FROM mysql.user;
-
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
-
-sudo mysql_secure_installation
-
-CREATE USER 'username'@'host' IDENTIFIED WITH mysql_native_password BY 'password';
-
-CREATE DATABASE Название БД;
-
-GRANT ALL ON laravel.* TO 'laravel'@'localhost';
-
-FLUSH PRIVILEGES;
-
-PHP-FPM-8.2
-
+SELECT user,authentication_string,plugin,host FROM mysql.user;<br>
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';<br>
+sudo mysql_secure_installation<br>
+CREATE USER 'username'@'host' IDENTIFIED WITH mysql_native_password BY 'password';<br>
+CREATE DATABASE Название БД;<br>
+GRANT ALL ON laravel.* TO 'laravel'@'localhost';<br>
+FLUSH PRIVILEGES;<br>
+PHP-FPM-8.2<br>
 sudo apt update && sudo apt install -y software-properties-common 
 sudo add-apt-repository ppa:ondrej/php 
 sudo apt update
-sudo apt install php8.2-fpm
-
+sudo apt install php8.2-fpm<br>
 GIT
-sudo apt install git
-
+sudo apt install git<br>
 COMPOSER
 cd ~
-sudo php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
-
+sudo php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer<br>
 NODE NPM
 curl -fsSL https://deb.nodesource.com/setup_19.x | bash - &&\
-sudo apt-get install -y nodejs
-
+sudo apt-get install -y nodejs<br>
 PHP Extensions
 sudo apt-get install php-bcmath
 sudo apt-get install php-mbstring
