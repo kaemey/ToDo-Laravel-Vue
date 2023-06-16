@@ -2,7 +2,10 @@
     <br>поиском и фильтрами. </h1> 
     <h2>Деплой на VPS (Ubuntu):</h2> 
     sudo apt update<br><br> 
-    NGINX sudo apt install nginx sudo systemctl reload nginx<br><br> 
+    NGINX<br>
+    sudo apt install nginx <br> 
+    sudo systemctl <br> 
+    reload nginx<br><br> 
     MYSQL<br> 
     sudo apt install mysql-server<br><br> 
     sudo mysql<br>
