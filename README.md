@@ -65,5 +65,5 @@ server {
 }
 </code>  
 </pre>
-sudo nginx -t
+sudo nginx -t<br>
 sudo systemctl reload nginx reload Nginx
